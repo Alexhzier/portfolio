@@ -62,7 +62,7 @@ export const Timeline: React.FC = () => {
               key={item.id}
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{ type: 'spring', stiffness: 180, damping: 24, delay: index * 0.1 }}
               className="relative group"
             >
