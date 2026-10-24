@@ -48,7 +48,7 @@ export const Timeline: React.FC = () => {
           transition={{ type: 'spring', stiffness: 180, damping: 24, delay: 0.14 }}
           className="text-base text-zinc-400 leading-relaxed font-normal"
         >
-          A decade operating across early-stage seed teams through to hyper-scale engineering organizations, setting the benchmark for performance, motion, and design engineering.
+          Hands-on engineering experience across full-stack applications, interactive reporting dashboards, and database-driven software systems.
         </motion.p>
       </div>
 
