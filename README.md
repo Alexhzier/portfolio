@@ -1,6 +1,6 @@
 # Alexhzier Asdain — Engineering & Creative Technology Portfolio
 
-Live Website: [https://nimble-saffron-hlhutbo.tmp.now](https://nimble-saffron-hlhutbo.tmp.now) (Deployed on Vercel)
+Live Website: [https://alexhzier-portfolio.com](https://alexhzier-portfolio.com) (Production) | [Vercel Preview](https://nimble-saffron-hlhutbo.tmp.now)
 
 A dark-mode, editorial portfolio designed with elevated typography, real-time 3D ambient physics, and strict accessibility standards.
 
