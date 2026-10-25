@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowDown, Copy, Check, Sparkles, Layers } from 'lucide-react';
 import { portfolioData } from '../content/portfolio-data';
 import { Floating3DCanvas } from './Floating3DCanvas';
@@ -33,16 +33,41 @@ export const Hero: React.FC<HeroProps> = ({ onCopyEmail }) => {
 
   const categories = ['All', ...techCategories.map((c) => c.category)];
 
+  const getCategoryLabel = (cat: string) => {
+    if (cat === 'All') return `All (${allSkills.length})`;
+    if (cat.includes('Full-Stack')) return 'Full-Stack (6)';
+    if (cat.includes('AI')) return 'AI & ML (6)';
+    if (cat.includes('Hardware')) return 'Hardware (4)';
+    return cat;
+  };
+
   return (
     <section
       id="hero"
-      className="relative min-h-[88vh] pt-28 sm:pt-36 pb-16 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 overflow-hidden bg-grid-subtle w-full max-w-full"
+      className="relative min-h-[90vh] pt-28 sm:pt-36 pb-20 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 overflow-hidden w-full max-w-full"
     >
-      {/* 3D Moving Objects Canvas behind text */}
-      <Floating3DCanvas />
+      {/* Seamless Architectural Grid Pattern with Bottom Gradient Mask */}
+      <div 
+        className="absolute inset-0 bg-grid-subtle pointer-events-none z-0 [mask-image:linear-gradient(to_bottom,black_40%,rgba(0,0,0,0.6)_70%,transparent_98%)] [-webkit-mask-image:linear-gradient(to_bottom,black_40%,rgba(0,0,0,0.6)_70%,transparent_98%)]"
+        aria-hidden="true"
+      />
+
+      {/* 3D Moving Objects Canvas with matching bottom fade */}
+      <div 
+        className="absolute inset-0 pointer-events-none z-0 [mask-image:linear-gradient(to_bottom,black_45%,rgba(0,0,0,0.7)_75%,transparent_98%)] [-webkit-mask-image:linear-gradient(to_bottom,black_45%,rgba(0,0,0,0.7)_75%,transparent_98%)]"
+        aria-hidden="true"
+      >
+        <Floating3DCanvas />
+      </div>
 
       {/* Editorial Ambient Radial Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[480px] radial-glow-hero pointer-events-none z-0" />
+
+      {/* Seamless Bottom Blend Gradient Overlay */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#09090b] via-[#09090b]/80 to-transparent pointer-events-none z-1" 
+        aria-hidden="true"
+      />
 
       <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center text-center">
         {/* Profile Pill & Availability Badge */}
@@ -56,7 +81,7 @@ export const Hero: React.FC<HeroProps> = ({ onCopyEmail }) => {
             <img
               src="/profile.png"
               alt="Alexhzier C. Asdain"
-              className="w-full h-full object-cover object-top filter brightness-[1.05]"
+              className="w-full h-full object-cover object-center filter brightness-[1.05]"
             />
             <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-400 border border-zinc-950" />
           </div>
@@ -141,57 +166,79 @@ export const Hero: React.FC<HeroProps> = ({ onCopyEmail }) => {
           </motion.button>
         </motion.div>
 
-        {/* Live Interactive Architecture Stack */}
+        {/* Live Interactive Architecture Stack with Seamless Morphing Transitions */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ type: 'spring', stiffness: 180, damping: 24, delay: 0.3 }}
           className="w-full max-w-3xl pt-8 border-t border-white/[0.06] flex flex-col items-center px-2"
         >
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 w-full mb-4">
-            <span className="text-xs font-mono uppercase tracking-wider text-zinc-500 flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 w-full mb-5">
+            <span className="text-xs font-mono uppercase tracking-wider text-zinc-400 flex items-center gap-2 font-medium">
               <Layers className="w-3.5 h-3.5 text-violet-400" />
               Specialized Architecture Stack
             </span>
 
-            {/* Filter Category Pills */}
-            <div className="flex items-center gap-1 bg-zinc-900/80 p-1 rounded-lg border border-white/[0.06] text-[11px] font-mono overflow-x-auto max-w-full">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-2.5 py-1 rounded-md transition-colors whitespace-nowrap cursor-pointer ${
-                    activeCategory === cat
-                      ? 'bg-violet-600/30 text-violet-200 border border-violet-500/40'
-                      : 'text-zinc-400 hover:text-zinc-200'
-                  }`}
-                >
-                  {cat === 'All' ? `All (${allSkills.length})` : cat.split(' ')[0]}
-                </button>
-              ))}
+            {/* Filter Category Pills with smooth sliding layoutId pill */}
+            <div className="relative flex items-center gap-1 bg-zinc-900/90 p-1 rounded-xl border border-white/[0.08] text-[11px] font-mono overflow-x-auto max-w-full shadow-inner">
+              {categories.map((cat) => {
+                const isActive = activeCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => setActiveCategory(cat)}
+                    className={`relative px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap cursor-pointer z-10 ${
+                      isActive ? 'text-violet-100 font-semibold' : 'text-zinc-400 hover:text-zinc-200'
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeCategoryPill"
+                        className="absolute inset-0 bg-violet-600/35 border border-violet-500/50 rounded-lg shadow-sm shadow-violet-500/25 -z-10"
+                        transition={{ type: 'spring', stiffness: 450, damping: 32 }}
+                      />
+                    )}
+                    <span className="relative z-10">{getCategoryLabel(cat)}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Interactive Badges Cloud with official SVG logos */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5 max-w-full">
-            {displayedSkills.map((skill) => (
-              <motion.div
-                key={skill.name}
-                layout
-                whileHover={{ scale: 1.04, y: -2 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="group relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#121217] hover:bg-[#181820] border border-white/[0.08] hover:border-violet-500/40 text-xs text-zinc-300 hover:text-white transition-colors shadow-sm cursor-default"
-              >
-                <TechLogo name={skill.name} className="w-3.5 h-3.5 shrink-0" />
-                <span className="font-medium">{skill.name}</span>
-                {skill.badge && (
-                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/[0.04] text-zinc-400 group-hover:text-violet-300 group-hover:bg-violet-500/10 border border-transparent group-hover:border-violet-500/20 transition-colors">
-                    {skill.badge}
-                  </span>
-                )}
-              </motion.div>
-            ))}
-          </div>
+          {/* Seamless Spring-Animated Badges Cloud */}
+          <motion.div 
+            layout
+            className="flex flex-wrap justify-center gap-2 sm:gap-2.5 max-w-full min-h-[96px]"
+          >
+            <AnimatePresence mode="popLayout">
+              {displayedSkills.map((skill) => (
+                <motion.div
+                  key={skill.name}
+                  layout
+                  initial={{ opacity: 0, scale: 0.85, y: 6 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.85, y: -6 }}
+                  transition={{ 
+                    type: 'spring', 
+                    stiffness: 420, 
+                    damping: 28, 
+                    mass: 0.6 
+                  }}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  className="group relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#121217] hover:bg-[#181820] border border-white/[0.08] hover:border-violet-500/40 text-xs text-zinc-300 hover:text-white transition-colors shadow-sm cursor-default"
+                >
+                  <TechLogo name={skill.name} className="w-3.5 h-3.5 shrink-0" />
+                  <span className="font-medium">{skill.name}</span>
+                  {skill.badge && (
+                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/[0.04] text-zinc-400 group-hover:text-violet-300 group-hover:bg-violet-500/10 border border-transparent group-hover:border-violet-500/20 transition-colors">
+                      {skill.badge}
+                    </span>
+                  )}
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
         </motion.div>
       </div>
     </section>
