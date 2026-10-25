@@ -11,9 +11,8 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onCopyEmail }) => {
   const [copied, setCopied] = useState<boolean>(false);
-  const [activeCategory, setActiveCategory] = useState<string>('All');
 
-  const { personal, techCategories } = portfolioData;
+  const { personal } = portfolioData;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(personal.email);
@@ -22,21 +21,20 @@ export const Hero: React.FC<HeroProps> = ({ onCopyEmail }) => {
     setTimeout(() => setCopied(false), 2400);
   };
 
-  const allSkills = techCategories.flatMap((c) =>
-    c.skills.map((s) => ({ ...s, category: c.category }))
-  );
-
-  const displayedSkills =
-    activeCategory === 'All'
-      ? allSkills
-      : allSkills.filter((s) => s.category === activeCategory);
-
-  const categories = ['All', ...techCategories.map((c) => c.category)];
+  const coreStack = [
+    'Next.js 15',
+    'TypeScript',
+    'React 19',
+    'Tailwind CSS',
+    'Supabase & PostgreSQL',
+    'Python',
+    'Natural Language Processing (NLP)',
+  ];
 
   return (
     <section
       id="hero"
-      className="relative min-h-[92vh] pt-28 sm:pt-36 pb-20 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 overflow-hidden bg-grid-subtle w-full max-w-full"
+      className="relative min-h-[88vh] pt-28 sm:pt-36 pb-16 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 overflow-hidden bg-grid-subtle w-full max-w-full"
     >
       {/* 3D Moving Objects Canvas behind text */}
       <Floating3DCanvas />
@@ -45,25 +43,32 @@ export const Hero: React.FC<HeroProps> = ({ onCopyEmail }) => {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[480px] radial-glow-hero pointer-events-none z-0" />
 
       <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center text-center">
-        {/* Availability Badge */}
+        {/* Profile Pill & Availability Badge */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ type: 'spring', stiffness: 180, damping: 24, delay: 0.1 }}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900/90 border border-white/[0.08] backdrop-blur-md shadow-lg shadow-black/40 mb-6 max-w-full"
+          transition={{ type: 'spring', stiffness: 200, damping: 25, delay: 0.1 }}
+          className="inline-flex items-center gap-2.5 p-1.5 pr-4 rounded-full bg-zinc-900/90 border border-white/[0.1] backdrop-blur-md shadow-xl shadow-black/50 mb-6 max-w-full group"
         >
-          <span className="relative flex h-2 w-2 shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+          <div className="relative w-8 h-8 rounded-full overflow-hidden border border-violet-500/40 bg-zinc-800 shrink-0">
+            <img
+              src="/profile.png"
+              alt="Alexhzier C. Asdain"
+              className="w-full h-full object-cover object-top filter brightness-[1.05]"
+            />
+            <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-400 border border-zinc-950" />
+          </div>
+          <span className="text-xs font-mono font-medium text-zinc-200">
+            Alexhzier C. Asdain
           </span>
-          <span className="text-[11px] sm:text-xs font-mono font-medium text-zinc-300 truncate">
-            <span className="hidden sm:inline">{personal.availability.label}</span>
-            <span className="sm:hidden">Available Q3/Q4</span>
-          </span>
-          <span className="text-zinc-600 font-mono">/</span>
-          <span className="text-[10px] sm:text-[11px] font-mono text-violet-400 shrink-0">
-            <span className="hidden sm:inline">{personal.location}</span>
-            <span className="sm:hidden">PH &amp; Remote</span>
+          <span className="text-zinc-600 font-mono">·</span>
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-emerald-300">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+            </span>
+            <span className="hidden sm:inline">Available for Roles</span>
+            <span className="sm:hidden">Available</span>
           </span>
         </motion.div>
 
@@ -71,21 +76,18 @@ export const Hero: React.FC<HeroProps> = ({ onCopyEmail }) => {
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ type: 'spring', stiffness: 180, damping: 24, delay: 0.15 }}
+          transition={{ type: 'spring', stiffness: 200, damping: 25, delay: 0.15 }}
           className="space-y-3 mb-6 w-full max-w-full"
         >
           <h1 className="text-3xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white break-words">
-            <span className="block text-zinc-400 text-base sm:text-2xl font-normal tracking-normal mb-2 font-mono">
-              Hi, I’m {personal.name}
-            </span>
             <span className="bg-gradient-to-b from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent">
               {personal.role}
             </span>
           </h1>
 
-          <div className="flex items-center justify-center gap-2 text-xs sm:text-base font-mono text-violet-400 font-medium">
-            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-violet-400" />
-            <span>{personal.subRole}</span>
+          <div className="flex items-center justify-center gap-2 text-xs sm:text-sm font-mono text-violet-400 font-medium">
+            <Sparkles className="w-3.5 h-3.5 text-violet-400" />
+            <span>Modern Web Applications · Applied Machine Learning · Hardware Prototypes</span>
           </div>
         </motion.div>
 
@@ -93,8 +95,8 @@ export const Hero: React.FC<HeroProps> = ({ onCopyEmail }) => {
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ type: 'spring', stiffness: 180, damping: 24, delay: 0.2 }}
-          className="text-base sm:text-xl lg:text-2xl text-zinc-300 font-normal leading-relaxed max-w-2xl mx-auto tracking-tight mb-8 px-2"
+          transition={{ type: 'spring', stiffness: 200, damping: 25, delay: 0.2 }}
+          className="text-base sm:text-lg lg:text-xl text-zinc-300 font-normal leading-relaxed max-w-2xl mx-auto tracking-tight mb-8 px-2"
         >
           {personal.positioningStatement}
         </motion.p>
@@ -103,8 +105,8 @@ export const Hero: React.FC<HeroProps> = ({ onCopyEmail }) => {
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ type: 'spring', stiffness: 180, damping: 24, delay: 0.25 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-16 w-full max-w-md px-4"
+          transition={{ type: 'spring', stiffness: 200, damping: 25, delay: 0.25 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 w-full max-w-md px-4"
         >
           {/* Scroll to work */}
           <motion.a
@@ -112,7 +114,7 @@ export const Hero: React.FC<HeroProps> = ({ onCopyEmail }) => {
             whileTap={{ scale: 0.98 }}
             className="w-full sm:w-auto sm:min-w-[170px] inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-medium text-sm shadow-xl shadow-violet-600/25 border border-violet-400/30 transition-all duration-150 cursor-pointer group"
           >
-            <span>View Selected Work</span>
+            <span>Explore Projects</span>
             <ArrowDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
           </motion.a>
 
@@ -137,55 +139,27 @@ export const Hero: React.FC<HeroProps> = ({ onCopyEmail }) => {
           </motion.button>
         </motion.div>
 
-        {/* Live Interactive Tech Stack Pill Cloud */}
+        {/* Gentle Core Tech Stack Strip */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ type: 'spring', stiffness: 180, damping: 24, delay: 0.3 }}
-          className="w-full max-w-3xl pt-8 border-t border-white/[0.06] flex flex-col items-center px-2"
+          transition={{ type: 'spring', stiffness: 200, damping: 25, delay: 0.3 }}
+          className="w-full max-w-3xl pt-6 border-t border-white/[0.06] flex flex-col items-center px-2"
         >
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 w-full mb-4">
-            <span className="text-xs font-mono uppercase tracking-wider text-zinc-500 flex items-center gap-2">
-              <Layers className="w-3.5 h-3.5 text-violet-400" />
-              Specialized Architecture Stack
-            </span>
-
-            {/* Filter Pills */}
-            <div className="flex items-center gap-1 bg-zinc-900/80 p-1 rounded-lg border border-white/[0.06] text-[11px] font-mono overflow-x-auto max-w-full">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-2.5 py-1 rounded-md transition-colors whitespace-nowrap cursor-pointer ${
-                    activeCategory === cat
-                      ? 'bg-violet-600/30 text-violet-200 border border-violet-500/40'
-                      : 'text-zinc-400 hover:text-zinc-200'
-                  }`}
-                >
-                  {cat === 'All' ? 'All (13)' : cat.split(' ')[0]}
-                </button>
-              ))}
-            </div>
+          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-zinc-500 mb-3">
+            <Layers className="w-3.5 h-3.5 text-violet-400" />
+            <span>Primary Technology Stack</span>
           </div>
 
-          {/* Interactive Badges Cloud */}
           <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5 max-w-full">
-            {displayedSkills.map((skill) => (
-              <motion.div
-                key={skill.name}
-                layout
-                whileHover={{ scale: 1.04, y: -2 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="group relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#121217] hover:bg-[#181820] border border-white/[0.08] hover:border-violet-500/40 text-xs text-zinc-300 hover:text-white transition-colors shadow-sm cursor-default"
+            {coreStack.map((tech) => (
+              <div
+                key={tech}
+                className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-zinc-900/70 border border-white/[0.06] text-xs font-mono text-zinc-300 shadow-sm"
               >
-                <TechLogo name={skill.name} className="w-3.5 h-3.5 shrink-0" />
-                <span className="font-medium">{skill.name}</span>
-                {skill.badge && (
-                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/[0.04] text-zinc-400 group-hover:text-violet-300 group-hover:bg-violet-500/10 border border-transparent group-hover:border-violet-500/20 transition-colors">
-                    {skill.badge}
-                  </span>
-                )}
-              </motion.div>
+                <TechLogo name={tech} className="w-3.5 h-3.5 shrink-0" />
+                <span>{tech}</span>
+              </div>
             ))}
           </div>
         </motion.div>

@@ -24,31 +24,31 @@ export const Timeline: React.FC = () => {
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ type: 'spring', stiffness: 180, damping: 24 }}
+          transition={{ type: 'spring', stiffness: 200, damping: 25 }}
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/80 border border-white/[0.08] text-xs font-mono text-violet-400 mb-3"
         >
           <Briefcase className="w-3.5 h-3.5" />
-          <span>Chronological Track Record</span>
+          <span>Work History</span>
         </motion.div>
 
         <motion.h2
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ type: 'spring', stiffness: 180, damping: 24, delay: 0.08 }}
+          transition={{ type: 'spring', stiffness: 200, damping: 25, delay: 0.08 }}
           className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4"
         >
-          Experience & Leadership
+          Experience &amp; Roles
         </motion.h2>
 
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ type: 'spring', stiffness: 180, damping: 24, delay: 0.14 }}
+          transition={{ type: 'spring', stiffness: 200, damping: 25, delay: 0.14 }}
           className="text-base text-zinc-400 leading-relaxed font-normal"
         >
-          Hands-on engineering experience across full-stack applications, interactive reporting dashboards, and database-driven software systems.
+          Hands-on software development experience across full-stack web applications, reporting dashboards, and database systems.
         </motion.p>
       </div>
 

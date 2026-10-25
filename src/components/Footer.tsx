@@ -81,10 +81,10 @@ export const Footer: React.FC = () => {
             </span>
             <ul className="space-y-2 text-zinc-400">
               <li><a href="#hero" className="hover:text-violet-300 transition-colors">Overview</a></li>
-              <li><a href="#projects" className="hover:text-violet-300 transition-colors">Selected Work</a></li>
-              <li><a href="#about" className="hover:text-violet-300 transition-colors">Education &amp; Profile</a></li>
-              <li><a href="#experience" className="hover:text-violet-300 transition-colors">Chronology</a></li>
-              <li><a href="#contact" className="hover:text-violet-300 transition-colors">Direct Channel</a></li>
+              <li><a href="#projects" className="hover:text-violet-300 transition-colors">Projects</a></li>
+              <li><a href="#about" className="hover:text-violet-300 transition-colors">About &amp; Education</a></li>
+              <li><a href="#experience" className="hover:text-violet-300 transition-colors">Experience</a></li>
+              <li><a href="#contact" className="hover:text-violet-300 transition-colors">Contact</a></li>
             </ul>
           </div>
 

@@ -38,8 +38,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
 
   const navItems = [
     { label: 'Overview', href: '#hero', id: 'hero' },
-    { label: 'Selected Work', href: '#projects', id: 'projects' },
-    { label: 'Education & Profile', href: '#about', id: 'about' },
+    { label: 'Projects', href: '#projects', id: 'projects' },
+    { label: 'About', href: '#about', id: 'about' },
     { label: 'Experience', href: '#experience', id: 'experience' },
   ];
 

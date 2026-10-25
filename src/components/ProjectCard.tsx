@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, MouseEvent } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowUpRight, Zap, Info, Play, Pause, Cpu, Eye, Radio } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight, Zap, Info, Play, Pause, Cpu, Eye, Radio, ChevronDown, Sparkles } from 'lucide-react';
 import { Project } from '../content/portfolio-data';
 import { GithubIcon } from './Icons';
 
@@ -30,6 +30,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) =
 
   // Interactive state for Penbrae Stall switcher
   const [activeStall, setActiveStall] = useState<'tea' | 'spice' | 'chilli'>('tea');
+
+  // Progressive disclosure state for telemetry & micro-widget
+  const [showTelemetry, setShowTelemetry] = useState<boolean>(false);
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -144,200 +147,236 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) =
           </div>
         )}
 
-        {/* Tactile Micro-Craft Visual Artifacts for Each Project */}
-        <div className="mb-6 rounded-xl bg-zinc-950/70 border border-white/[0.06] p-4 overflow-hidden relative">
-          {/* Project 1: Social Media Listening for Mental Health */}
-          {project.id === 'social-media-listening' && (
-            <div className="w-full flex flex-col justify-between font-mono text-[11px] space-y-3">
-              <div className="flex items-center justify-between text-zinc-400 border-b border-white/[0.06] pb-2">
-                <span className="flex items-center gap-2 text-violet-300 font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
-                  SOCCSARGEN Dataset: 5,067 Manually Collected Posts
-                </span>
-                <span className="text-zinc-500 text-[10px]">Region XII • Highcharts</span>
-              </div>
+        {/* Progressive Disclosure: Interactive Telemetry & Live Demo Toggle */}
+        <div className="mb-5">
+          <button
+            type="button"
+            onClick={() => setShowTelemetry(!showTelemetry)}
+            className="w-full py-2.5 px-3.5 rounded-xl bg-zinc-900/60 hover:bg-zinc-900/90 border border-white/[0.06] hover:border-violet-500/30 text-xs font-mono text-zinc-300 flex items-center justify-between transition-all duration-200 cursor-pointer shadow-sm group/btn"
+          >
+            <span className="flex items-center gap-2">
+              <Sparkles className="w-3.5 h-3.5 text-violet-400 group-hover/btn:rotate-12 transition-transform" />
+              <span className="font-medium text-zinc-300 group-hover/btn:text-white">
+                {showTelemetry
+                  ? 'Hide Interactive Telemetry & Demo'
+                  : project.id === 'social-media-listening'
+                  ? 'Explore Dataset Telemetry & Breakdown'
+                  : project.id === 'ai-study-tracker'
+                  ? 'Try Interactive Study Timer & Engine'
+                  : project.id === 'penbrae-and-co'
+                  ? 'Explore Stall Environments'
+                  : 'View Hardware Reader Telemetry'}
+              </span>
+            </span>
+            <ChevronDown className={`w-4 h-4 text-zinc-400 transition-transform duration-300 ${showTelemetry ? 'rotate-180 text-violet-400' : ''}`} />
+          </button>
 
-              {/* Multi-segment distribution bar */}
-              <div className="space-y-1.5">
-                <div className="h-3 w-full bg-zinc-900 rounded-full overflow-hidden flex">
-                  <div className="h-full bg-amber-500 w-[30.96%]" title="Stress: 30.96%" />
-                  <div className="h-full bg-rose-500 w-[18.69%]" title="Suicidal Behavior: 18.69%" />
-                  <div className="h-full bg-purple-500 w-[17.64%]" title="Depression: 17.64%" />
-                  <div className="h-full bg-blue-500 w-[15.53%]" title="Anxiety: 15.53%" />
-                  <div className="h-full bg-emerald-500 w-[15.25%]" title="Addiction: 15.25%" />
-                  <div className="h-full bg-zinc-600 w-[1.91%]" title="Other: 1.91%" />
+          <AnimatePresence>
+            {showTelemetry && (
+              <motion.div
+                initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                animate={{ opacity: 1, height: 'auto', marginTop: 10 }}
+                exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="overflow-hidden"
+              >
+                <div className="rounded-xl bg-zinc-950/70 border border-white/[0.06] p-4 relative">
+                  {/* Project 1: Social Media Listening for Mental Health */}
+                  {project.id === 'social-media-listening' && (
+                    <div className="w-full flex flex-col justify-between font-mono text-[11px] space-y-3">
+                      <div className="flex items-center justify-between text-zinc-400 border-b border-white/[0.06] pb-2">
+                        <span className="flex items-center gap-2 text-violet-300 font-semibold">
+                          <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
+                          SOCCSARGEN Dataset: 5,067 Manually Collected Posts
+                        </span>
+                        <span className="text-zinc-500 text-[10px]">Region XII • Highcharts</span>
+                      </div>
+
+                      {/* Multi-segment distribution bar */}
+                      <div className="space-y-1.5">
+                        <div className="h-3 w-full bg-zinc-900 rounded-full overflow-hidden flex">
+                          <div className="h-full bg-amber-500 w-[30.96%]" title="Stress: 30.96%" />
+                          <div className="h-full bg-rose-500 w-[18.69%]" title="Suicidal Behavior: 18.69%" />
+                          <div className="h-full bg-purple-500 w-[17.64%]" title="Depression: 17.64%" />
+                          <div className="h-full bg-blue-500 w-[15.53%]" title="Anxiety: 15.53%" />
+                          <div className="h-full bg-emerald-500 w-[15.25%]" title="Addiction: 15.25%" />
+                          <div className="h-full bg-zinc-600 w-[1.91%]" title="Other: 1.91%" />
+                        </div>
+                        <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 text-[10px] text-zinc-400 pt-1">
+                          <div className="flex items-center gap-1">
+                            <span className="w-2 h-2 rounded-full bg-amber-500" />
+                            <span>Stress (31%)</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <span className="w-2 h-2 rounded-full bg-rose-500" />
+                            <span>Suicidal (19%)</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <span className="w-2 h-2 rounded-full bg-purple-500" />
+                            <span>Depression (18%)</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <span className="w-2 h-2 rounded-full bg-blue-500" />
+                            <span>Anxiety (16%)</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                            <span>Addiction (15%)</span>
+                          </div>
+                          <div className="flex items-center gap-1 text-zinc-500">
+                            <span className="w-2 h-2 rounded-full bg-zinc-600" />
+                            <span>Other (2%)</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between text-[10px] text-zinc-500 pt-2 border-t border-white/[0.04]">
+                        <span>Sources: FB, X, TikTok, Threads</span>
+                        <span>Model: CNN-LSTM NLP Classifier</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Project 2: AI Study Tracker */}
+                  {project.id === 'ai-study-tracker' && (
+                    <div className="w-full flex flex-col justify-between font-mono text-[11px] space-y-3">
+                      <div className="flex items-center justify-between text-zinc-400">
+                        <span className="text-zinc-300 font-semibold flex items-center gap-1.5">
+                          <Radio className="w-3.5 h-3.5 text-emerald-400" />
+                          Synced Study Timer &amp; AI Planner Engine
+                        </span>
+                        <span className="text-emerald-400 text-[10px] bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                          Supabase RLS Active
+                        </span>
+                      </div>
+
+                      {/* Timer & Session State */}
+                      <div className="flex items-center justify-between p-2.5 rounded-lg bg-zinc-900/90 border border-white/[0.06]">
+                        <div>
+                          <span className="text-[10px] text-zinc-500 block">CURRENT SESSION</span>
+                          <span className="text-sm font-bold text-white tracking-wide">
+                            {Math.floor(timerSeconds / 60)}:00
+                          </span>
+                          <span className="text-[10px] text-zinc-400 ml-2 font-sans">Distributed Systems</span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setTimerRunning(!timerRunning)}
+                          className="px-2.5 py-1 rounded bg-violet-600 hover:bg-violet-500 text-white text-[11px] flex items-center gap-1.5 cursor-pointer transition-colors"
+                        >
+                          {timerRunning ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
+                          <span>{timerRunning ? 'Pause (Synced)' : 'Start Timer'}</span>
+                        </button>
+                      </div>
+
+                      <div className="flex justify-between text-[10px] text-zinc-500">
+                        <span>Vercel AI SDK • Grounded Prompting</span>
+                        <span>Recharts Calendar Intensity</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Project 3: Penbrae & Co. */}
+                  {project.id === 'penbrae-and-co' && (
+                    <div className="w-full flex flex-col justify-between font-mono text-[11px] space-y-3">
+                      <div className="flex items-center justify-between text-zinc-400">
+                        <span>Single-Harvest Stall Provenance</span>
+                        <span className="text-emerald-400 font-bold bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
+                          Paint: &lt; 50ms
+                        </span>
+                      </div>
+
+                      {/* Interactive Stall Selector */}
+                      <div className="grid grid-cols-3 gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => setActiveStall('tea')}
+                          className={`p-1.5 rounded text-center transition-colors cursor-pointer ${
+                            activeStall === 'tea'
+                              ? 'bg-amber-900/40 border border-amber-500/40 text-amber-200'
+                              : 'bg-zinc-900/60 border border-white/5 text-zinc-400'
+                          }`}
+                        >
+                          <span className="text-[9px] block text-zinc-500">STALL I</span>
+                          <span className="text-[10px] font-semibold">Teas</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setActiveStall('spice')}
+                          className={`p-1.5 rounded text-center transition-colors cursor-pointer ${
+                            activeStall === 'spice'
+                              ? 'bg-orange-900/40 border border-orange-500/40 text-orange-200'
+                              : 'bg-zinc-900/60 border border-white/5 text-zinc-400'
+                          }`}
+                        >
+                          <span className="text-[9px] block text-zinc-500">STALL II</span>
+                          <span className="text-[10px] font-semibold">Spices</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setActiveStall('chilli')}
+                          className={`p-1.5 rounded text-center transition-colors cursor-pointer ${
+                            activeStall === 'chilli'
+                              ? 'bg-rose-900/40 border border-rose-500/40 text-rose-200'
+                              : 'bg-zinc-900/60 border border-white/5 text-zinc-400'
+                          }`}
+                        >
+                          <span className="text-[9px] block text-zinc-500">STALL III</span>
+                          <span className="text-[10px] font-semibold">Chillies</span>
+                        </button>
+                      </div>
+
+                      <div className="text-[10px] text-zinc-400 bg-zinc-900/50 p-2 rounded border border-white/[0.04]">
+                        {activeStall === 'tea' && 'Lot 26-A: Upper Assam Tippy Orthodox • Lat 27.48°N, 95.01°E'}
+                        {activeStall === 'spice' && 'Lot 26-B: Lakadong Turmeric (7.8% Curcumin) • Jaintia Hills'}
+                        {activeStall === 'chilli' && 'Lot 26-C: Whole Alder-Smoked Naga King Chilli • Mon District'}
+                      </div>
+
+                      <div className="flex justify-between text-[10px] text-zinc-500">
+                        <span>Zero-Bloat Vanilla JS</span>
+                        <span>Leaflet.js Cartography</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Project 4: Fingerprint Capture Prototype */}
+                  {project.id === 'fingerprint-prototype' && (
+                    <div className="w-full flex flex-col justify-between font-mono text-[11px] space-y-3">
+                      <div className="flex items-center justify-between text-zinc-400">
+                        <span className="flex items-center gap-1.5 text-zinc-200 font-semibold">
+                          <Cpu className="w-3.5 h-3.5 text-violet-400" />
+                          Hardware Integration Prototype
+                        </span>
+                        <span className="text-amber-400 text-[10px] bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">
+                          Proof of Concept
+                        </span>
+                      </div>
+
+                      <div className="space-y-1.5 p-2.5 rounded-lg bg-zinc-900/80 border border-white/[0.06]">
+                        <div className="flex justify-between text-[10px]">
+                          <span className="text-zinc-500">HARDWARE READER:</span>
+                          <span className="text-zinc-200">DigitalPersona U.are.U 4500</span>
+                        </div>
+                        <div className="flex justify-between text-[10px]">
+                          <span className="text-zinc-500">SDK INTERFACE:</span>
+                          <span className="text-emerald-400">DPUruNet Driver Connected</span>
+                        </div>
+                        <div className="flex justify-between text-[10px]">
+                          <span className="text-zinc-500">OPTICAL RESOLUTION:</span>
+                          <span className="text-violet-300">500 DPI Raw FID Image Buffer</span>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between text-[10px] text-zinc-500">
+                        <span>React / Next.js Web Interface</span>
+                        <span>PostgreSQL Enrollment Logs</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 text-[10px] text-zinc-400 pt-1">
-                  <div className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-amber-500" />
-                    <span>Stress (31%)</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-rose-500" />
-                    <span>Suicidal (19%)</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-purple-500" />
-                    <span>Depression (18%)</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-blue-500" />
-                    <span>Anxiety (16%)</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                    <span>Addiction (15%)</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-zinc-500">
-                    <span className="w-2 h-2 rounded-full bg-zinc-600" />
-                    <span>Other (2%)</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-between text-[10px] text-zinc-500 pt-2 border-t border-white/[0.04]">
-                <span>Sources: FB, X, TikTok, Threads</span>
-                <span>Model: CNN-LSTM NLP Classifier</span>
-              </div>
-            </div>
-          )}
-
-          {/* Project 2: AI Study Tracker */}
-          {project.id === 'ai-study-tracker' && (
-            <div className="w-full flex flex-col justify-between font-mono text-[11px] space-y-3">
-              <div className="flex items-center justify-between text-zinc-400">
-                <span className="text-zinc-300 font-semibold flex items-center gap-1.5">
-                  <Radio className="w-3.5 h-3.5 text-emerald-400" />
-                  Synced Study Timer &amp; AI Planner Engine
-                </span>
-                <span className="text-emerald-400 text-[10px] bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                  Supabase RLS Active
-                </span>
-              </div>
-
-              {/* Timer & Session State */}
-              <div className="flex items-center justify-between p-2.5 rounded-lg bg-zinc-900/90 border border-white/[0.06]">
-                <div>
-                  <span className="text-[10px] text-zinc-500 block">CURRENT SESSION</span>
-                  <span className="text-sm font-bold text-white tracking-wide">
-                    {Math.floor(timerSeconds / 60)}:00
-                  </span>
-                  <span className="text-[10px] text-zinc-400 ml-2 font-sans">Distributed Systems</span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setTimerRunning(!timerRunning)}
-                  className="px-2.5 py-1 rounded bg-violet-600 hover:bg-violet-500 text-white text-[11px] flex items-center gap-1.5 cursor-pointer transition-colors"
-                >
-                  {timerRunning ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
-                  <span>{timerRunning ? 'Pause (Synced)' : 'Start Timer'}</span>
-                </button>
-              </div>
-
-              <div className="flex justify-between text-[10px] text-zinc-500">
-                <span>Vercel AI SDK • Grounded Prompting</span>
-                <span>Recharts Calendar Intensity</span>
-              </div>
-            </div>
-          )}
-
-          {/* Project 3: Penbrae & Co. */}
-          {project.id === 'penbrae-and-co' && (
-            <div className="w-full flex flex-col justify-between font-mono text-[11px] space-y-3">
-              <div className="flex items-center justify-between text-zinc-400">
-                <span>Single-Harvest Stall Provenance</span>
-                <span className="text-emerald-400 font-bold bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
-                  Paint: &lt; 50ms
-                </span>
-              </div>
-
-              {/* Interactive Stall Selector */}
-              <div className="grid grid-cols-3 gap-1.5">
-                <button
-                  type="button"
-                  onClick={() => setActiveStall('tea')}
-                  className={`p-1.5 rounded text-center transition-colors cursor-pointer ${
-                    activeStall === 'tea'
-                      ? 'bg-amber-900/40 border border-amber-500/40 text-amber-200'
-                      : 'bg-zinc-900/60 border border-white/5 text-zinc-400'
-                  }`}
-                >
-                  <span className="text-[9px] block text-zinc-500">STALL I</span>
-                  <span className="text-[10px] font-semibold">Teas</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveStall('spice')}
-                  className={`p-1.5 rounded text-center transition-colors cursor-pointer ${
-                    activeStall === 'spice'
-                      ? 'bg-orange-900/40 border border-orange-500/40 text-orange-200'
-                      : 'bg-zinc-900/60 border border-white/5 text-zinc-400'
-                  }`}
-                >
-                  <span className="text-[9px] block text-zinc-500">STALL II</span>
-                  <span className="text-[10px] font-semibold">Spices</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveStall('chilli')}
-                  className={`p-1.5 rounded text-center transition-colors cursor-pointer ${
-                    activeStall === 'chilli'
-                      ? 'bg-rose-900/40 border border-rose-500/40 text-rose-200'
-                      : 'bg-zinc-900/60 border border-white/5 text-zinc-400'
-                  }`}
-                >
-                  <span className="text-[9px] block text-zinc-500">STALL III</span>
-                  <span className="text-[10px] font-semibold">Chillies</span>
-                </button>
-              </div>
-
-              <div className="text-[10px] text-zinc-400 bg-zinc-900/50 p-2 rounded border border-white/[0.04]">
-                {activeStall === 'tea' && 'Lot 26-A: Upper Assam Tippy Orthodox • Lat 27.48°N, 95.01°E'}
-                {activeStall === 'spice' && 'Lot 26-B: Lakadong Turmeric (7.8% Curcumin) • Jaintia Hills'}
-                {activeStall === 'chilli' && 'Lot 26-C: Whole Alder-Smoked Naga King Chilli • Mon District'}
-              </div>
-
-              <div className="flex justify-between text-[10px] text-zinc-500">
-                <span>Zero-Bloat Vanilla JS</span>
-                <span>Leaflet.js Cartography</span>
-              </div>
-            </div>
-          )}
-
-          {/* Project 4: Fingerprint Capture Prototype */}
-          {project.id === 'fingerprint-prototype' && (
-            <div className="w-full flex flex-col justify-between font-mono text-[11px] space-y-3">
-              <div className="flex items-center justify-between text-zinc-400">
-                <span className="flex items-center gap-1.5 text-zinc-200 font-semibold">
-                  <Cpu className="w-3.5 h-3.5 text-violet-400" />
-                  Hardware Integration Prototype
-                </span>
-                <span className="text-amber-400 text-[10px] bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">
-                  Proof of Concept
-                </span>
-              </div>
-
-              <div className="space-y-1.5 p-2.5 rounded-lg bg-zinc-900/80 border border-white/[0.06]">
-                <div className="flex justify-between text-[10px]">
-                  <span className="text-zinc-500">HARDWARE READER:</span>
-                  <span className="text-zinc-200">DigitalPersona U.are.U 4500</span>
-                </div>
-                <div className="flex justify-between text-[10px]">
-                  <span className="text-zinc-500">SDK INTERFACE:</span>
-                  <span className="text-emerald-400">DPUruNet Driver Connected</span>
-                </div>
-                <div className="flex justify-between text-[10px]">
-                  <span className="text-zinc-500">OPTICAL RESOLUTION:</span>
-                  <span className="text-violet-300">500 DPI Raw FID Image Buffer</span>
-                </div>
-              </div>
-
-              <div className="flex justify-between text-[10px] text-zinc-500">
-                <span>React / Next.js Web Interface</span>
-                <span>PostgreSQL Enrollment Logs</span>
-              </div>
-            </div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
