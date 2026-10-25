@@ -3,16 +3,11 @@ import { motion } from 'framer-motion';
 import { 
   GraduationCap, 
   User, 
-  MapPin, 
-  Clock, 
-  Mail, 
-  Phone, 
   CheckCircle2, 
   BookOpen, 
-  ArrowUpRight 
+  Terminal
 } from 'lucide-react';
 import { portfolioData } from '../content/portfolio-data';
-import { GithubIcon, LinkedInIcon } from './Icons';
 
 export const PersonalInfoEducation: React.FC = () => {
   const { personal } = portfolioData;
@@ -25,6 +20,12 @@ export const PersonalInfoEducation: React.FC = () => {
     'Full-Stack Web Architectures',
     'Neural Networks (CNN-LSTM)',
     'Biometric Hardware Integration'
+  ];
+
+  const profileHighlights = [
+    { label: 'Primary Discipline', value: 'Full-Stack Engineering & Web Platforms' },
+    { label: 'Applied AI & ML', value: 'NLP, Neural Classification & Data Visualizations' },
+    { label: 'Systems & Hardware', value: 'Biometric SDKs & Hardware Telemetry' },
   ];
 
   return (
@@ -51,8 +52,8 @@ export const PersonalInfoEducation: React.FC = () => {
           </p>
         </div>
 
-        {/* Responsive Bento Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10">
+        {/* Responsive 2-Column Bento Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10 items-stretch">
           
           {/* Card 1: Academic Degree Showcase (Spans 7 cols on lg) */}
           <motion.div
@@ -120,21 +121,20 @@ export const PersonalInfoEducation: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Right Column: Personal Identity & Contact Cards (Spans 5 cols on lg) */}
-          <div className="lg:col-span-5 flex flex-col gap-6">
-            
-            {/* Card 2: Personal Identity Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ type: 'spring', stiffness: 180, damping: 24, delay: 0.08 }}
-              className="rounded-2xl bg-zinc-950/70 border border-white/[0.08] hover:border-violet-500/30 transition-all duration-300 p-6 sm:p-7 group relative overflow-hidden"
-            >
-              {/* Subtle Ambient Violet Corner Glow */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-violet-600/10 rounded-full blur-2xl pointer-events-none" />
+          {/* Card 2: Personal Profile & Photo Card (Spans 5 cols on lg) */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ type: 'spring', stiffness: 180, damping: 24, delay: 0.08 }}
+            className="lg:col-span-5 rounded-2xl bg-zinc-950/70 border border-white/[0.08] hover:border-violet-500/30 transition-all duration-300 p-6 sm:p-8 flex flex-col justify-between group relative overflow-hidden"
+          >
+            {/* Subtle Ambient Violet Corner Glow */}
+            <div className="absolute top-0 right-0 w-36 h-36 bg-violet-600/10 rounded-full blur-2xl pointer-events-none" />
 
-              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5 mb-5 relative z-10">
+            <div>
+              {/* Header with Photo and Identity */}
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5 mb-6 relative z-10">
                 {/* Profile Portrait */}
                 <div className="relative shrink-0 group/photo">
                   <div className="w-20 h-24 sm:w-24 sm:h-28 rounded-2xl overflow-hidden border-2 border-white/10 group-hover:border-violet-500/50 transition-all duration-300 shadow-xl shadow-black/70 bg-zinc-900">
@@ -150,7 +150,7 @@ export const PersonalInfoEducation: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Identity Information */}
+                {/* Identity Text */}
                 <div className="flex-1 text-center sm:text-left">
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-white/[0.06] text-[10px] font-mono uppercase tracking-wider text-violet-400 mb-1.5 font-semibold">
                     <User className="w-3 h-3" />
@@ -159,103 +159,39 @@ export const PersonalInfoEducation: React.FC = () => {
                   <h4 className="text-lg sm:text-xl font-bold text-white tracking-tight">
                     {personal.name}
                   </h4>
-                  <div className="text-xs font-mono text-zinc-300 mt-1">
-                    <span className="text-violet-400 font-medium">{personal.role}</span>
+                  <div className="text-xs font-mono text-violet-400 font-medium mt-1">
+                    {personal.role}
                   </div>
-                  <div className="flex items-center justify-center sm:justify-start gap-1.5 text-[11px] font-mono text-emerald-300 mt-2.5">
+                  <div className="flex items-center justify-center sm:justify-start gap-1.5 text-[11px] font-mono text-emerald-300 mt-2">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                     <span>{personal.availability.label}</span>
                   </div>
                 </div>
               </div>
 
-              <p className="text-xs text-zinc-400 leading-relaxed font-normal pt-4 border-t border-white/[0.06] relative z-10">
+              {/* Bio Statement */}
+              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-normal mb-5 relative z-10">
                 {personal.bioParagraph}
               </p>
-            </motion.div>
+            </div>
 
-            {/* Card 3: Location & Direct Contact Channels */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ type: 'spring', stiffness: 180, damping: 24, delay: 0.14 }}
-              className="rounded-2xl bg-zinc-950/70 border border-white/[0.08] hover:border-violet-500/30 transition-all duration-300 p-6 sm:p-7 group"
-            >
-              <div className="flex items-center justify-between gap-2 mb-4">
-                <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 font-semibold uppercase tracking-wider">
-                  <MapPin className="w-3.5 h-3.5 text-violet-400" />
-                  <span>LOCATION &amp; DIRECT REACH</span>
+            {/* Structured Engineering Capabilities Checklist */}
+            <div className="pt-4 border-t border-white/[0.06] space-y-2 relative z-10">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 block mb-2 font-semibold">
+                CORE TECHNICAL DISCIPLINES
+              </span>
+              {profileHighlights.map((item, idx) => (
+                <div key={idx} className="flex items-start gap-2.5 text-xs">
+                  <Terminal className="w-3.5 h-3.5 text-violet-400 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-zinc-400 font-mono text-[11px] block">{item.label}</span>
+                    <span className="text-zinc-200 font-medium">{item.value}</span>
+                  </div>
                 </div>
-                <span className="text-[11px] font-mono text-zinc-500 flex items-center gap-1">
-                  <Clock className="w-3 h-3 text-violet-400" />
-                  PHT (UTC+8)
-                </span>
-              </div>
+              ))}
+            </div>
+          </motion.div>
 
-              <div className="space-y-3 text-xs">
-                {/* Location */}
-                <div className="p-2.5 rounded-xl bg-zinc-900/60 border border-white/[0.04] flex items-center justify-between">
-                  <span className="text-zinc-400 font-mono">Location:</span>
-                  <span className="text-white font-medium">{personal.location}</span>
-                </div>
-
-                {/* Email */}
-                <a
-                  href={`mailto:${personal.email}`}
-                  className="p-2.5 rounded-xl bg-zinc-900/60 border border-white/[0.04] hover:border-violet-500/30 flex items-center justify-between group/link transition-colors text-zinc-300 hover:text-white"
-                >
-                  <span className="flex items-center gap-2 font-mono text-zinc-400">
-                    <Mail className="w-3.5 h-3.5 text-violet-400" />
-                    Email
-                  </span>
-                  <span className="font-mono text-zinc-200 group-hover/link:text-violet-300 truncate max-w-[200px]">
-                    {personal.email}
-                  </span>
-                </a>
-
-                {/* Phone */}
-                <a
-                  href={`tel:${personal.phoneRaw}`}
-                  className="p-2.5 rounded-xl bg-zinc-900/60 border border-white/[0.04] hover:border-violet-500/30 flex items-center justify-between group/link transition-colors text-zinc-300 hover:text-white"
-                >
-                  <span className="flex items-center gap-2 font-mono text-zinc-400">
-                    <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                    Phone
-                  </span>
-                  <span className="font-mono text-zinc-200 group-hover/link:text-emerald-300">
-                    {personal.phone}
-                  </span>
-                </a>
-
-                {/* Social Networks Quick Bar */}
-                <div className="pt-2 flex items-center justify-between gap-2">
-                  <a
-                    href="https://github.com/Alexhzier"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 py-2 px-3 rounded-xl bg-zinc-900/80 border border-white/[0.06] hover:border-violet-500/40 text-zinc-300 hover:text-white flex items-center justify-center gap-2 font-mono text-[11px] transition-colors"
-                  >
-                    <GithubIcon className="w-3.5 h-3.5 text-zinc-400" />
-                    <span>GitHub</span>
-                    <ArrowUpRight className="w-3 h-3 text-zinc-500" />
-                  </a>
-
-                  <a
-                    href="https://www.linkedin.com/in/alexhzier-asdain-317664260/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 py-2 px-3 rounded-xl bg-zinc-900/80 border border-white/[0.06] hover:border-violet-500/40 text-zinc-300 hover:text-white flex items-center justify-center gap-2 font-mono text-[11px] transition-colors"
-                  >
-                    <LinkedInIcon className="w-3.5 h-3.5 text-[#0A66C2]" />
-                    <span>LinkedIn</span>
-                    <ArrowUpRight className="w-3 h-3 text-zinc-500" />
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-
-          </div>
         </div>
       </div>
     </section>

@@ -1,6 +1,19 @@
 import React, { useState, FormEvent } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Send, CheckCircle2, AlertCircle, ArrowUpRight, Copy, Check, MessageSquare, Phone } from 'lucide-react';
+import { 
+  Mail, 
+  Send, 
+  CheckCircle2, 
+  AlertCircle, 
+  ArrowUpRight, 
+  Copy, 
+  Check, 
+  MessageSquare, 
+  Phone,
+  MapPin,
+  Clock,
+  Globe
+} from 'lucide-react';
 import { portfolioData } from '../content/portfolio-data';
 import { SocialLogo } from './Icons';
 
@@ -99,12 +112,45 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onNotify }) => {
           </h2>
 
           <p className="text-base text-zinc-300 leading-relaxed font-normal">
-            Whether you need a Principal Architect to audit mission-critical frontend infrastructure, build a hardware-accelerated spatial canvas, or advise your product leadership team—let’s talk.
+            Whether you need a Full-Stack Engineer and Website Developer to build production-grade web systems, deploy intelligent interfaces, or collaborate on specialized software solutions—let’s talk.
           </p>
 
+          {/* Location & Timezone Hub */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-[#121217] border border-white/[0.08] space-y-3">
+            <div className="flex items-center justify-between text-xs font-mono text-zinc-400">
+              <span className="flex items-center gap-1.5 uppercase font-semibold tracking-wider text-violet-400">
+                <MapPin className="w-3.5 h-3.5" />
+                LOCATION &amp; TIMEZONE
+              </span>
+              <span className="text-emerald-400 flex items-center gap-1 text-[11px]">
+                <Clock className="w-3 h-3" />
+                PHT (UTC+8)
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+              <div className="p-3 rounded-xl bg-zinc-950/80 border border-white/[0.06] flex items-center gap-2.5">
+                <Globe className="w-4 h-4 text-violet-400 shrink-0" />
+                <div>
+                  <span className="text-[10px] font-mono text-zinc-500 uppercase block">Base Region</span>
+                  <span className="text-xs font-semibold text-white">{personal.location}</span>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-zinc-950/80 border border-white/[0.06] flex items-center gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <div>
+                  <span className="text-[10px] font-mono text-zinc-500 uppercase block">Availability</span>
+                  <span className="text-xs font-semibold text-emerald-300">Open to Remote Worldwide</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Direct Reach Channels */}
           <div className="p-5 rounded-2xl bg-[#121217] border border-white/[0.08] space-y-4">
             <div className="flex items-center justify-between text-xs font-mono text-zinc-400">
-              <span>DIRECT INBOX</span>
+              <span className="uppercase tracking-wider font-semibold text-zinc-300">DIRECT INBOX</span>
               <span className="text-emerald-400 flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 Response SLA: &lt; 24h
@@ -125,7 +171,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onNotify }) => {
             </div>
 
             <div className="flex items-center justify-between text-xs font-mono text-zinc-400 pt-1">
-              <span>DIRECT PHONE LINE (PH)</span>
+              <span className="uppercase tracking-wider font-semibold text-zinc-300">DIRECT PHONE LINE (PH)</span>
               <span className="text-violet-400 font-mono text-[11px]">Voice / SMS</span>
             </div>
 
