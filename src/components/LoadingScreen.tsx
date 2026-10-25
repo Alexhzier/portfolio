@@ -19,34 +19,29 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
   ];
 
   useEffect(() => {
-    // Graceful, cinematic progress counter (~2.8s total duration)
+    // Strictly 3.0 seconds total: 100 ticks incrementing exactly +1 every 30ms (zero skipped numbers)
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
           return 100;
         }
-        // Smooth steady increments
-        const increment = prev < 75 
-          ? (Math.random() > 0.3 ? 2 : 1) 
-          : (Math.random() > 0.4 ? 3 : 2);
-        const next = Math.min(prev + increment, 100);
-        return next;
+        return prev + 1;
       });
-    }, 48);
+    }, 30);
 
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    if (progress > 20 && statusIndex === 0) setStatusIndex(1);
-    else if (progress > 55 && statusIndex === 1) setStatusIndex(2);
-    else if (progress >= 100 && statusIndex === 2) setStatusIndex(3);
+    if (progress >= 25 && progress < 55 && statusIndex !== 1) setStatusIndex(1);
+    else if (progress >= 55 && progress < 100 && statusIndex !== 2) setStatusIndex(2);
+    else if (progress >= 100 && statusIndex !== 3) setStatusIndex(3);
 
     if (progress >= 100) {
       const timeout = setTimeout(() => {
         onComplete();
-      }, 650);
+      }, 350);
       return () => clearTimeout(timeout);
     }
   }, [progress, statusIndex, onComplete]);
