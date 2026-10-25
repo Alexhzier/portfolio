@@ -19,7 +19,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
   ];
 
   useEffect(() => {
-    // Deliberate, smooth progress counter increment (~1.6s total duration)
+    // Graceful, cinematic progress counter (~2.8s total duration)
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
@@ -27,24 +27,26 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           return 100;
         }
         // Smooth steady increments
-        const increment = prev < 80 ? Math.floor(Math.random() * 3) + 2 : Math.floor(Math.random() * 4) + 3;
+        const increment = prev < 75 
+          ? (Math.random() > 0.3 ? 2 : 1) 
+          : (Math.random() > 0.4 ? 3 : 2);
         const next = Math.min(prev + increment, 100);
         return next;
       });
-    }, 38);
+    }, 48);
 
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    if (progress > 25 && statusIndex === 0) setStatusIndex(1);
-    else if (progress > 60 && statusIndex === 1) setStatusIndex(2);
+    if (progress > 20 && statusIndex === 0) setStatusIndex(1);
+    else if (progress > 55 && statusIndex === 1) setStatusIndex(2);
     else if (progress >= 100 && statusIndex === 2) setStatusIndex(3);
 
     if (progress >= 100) {
       const timeout = setTimeout(() => {
         onComplete();
-      }, 450);
+      }, 650);
       return () => clearTimeout(timeout);
     }
   }, [progress, statusIndex, onComplete]);
