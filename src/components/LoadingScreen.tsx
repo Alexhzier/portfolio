@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Terminal } from 'lucide-react';
 import { portfolioData } from '../content/portfolio-data';
 
 interface LoadingScreenProps {
@@ -9,14 +8,6 @@ interface LoadingScreenProps {
 
 export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
   const [progress, setProgress] = useState<number>(0);
-  const [statusIndex, setStatusIndex] = useState<number>(0);
-
-  const statuses = [
-    'Initializing portfolio runtime...',
-    'Loading 3D vector geometries...',
-    'Compiling project telemetry...',
-    'System ready.',
-  ];
 
   useEffect(() => {
     // Strictly 3.0 seconds total: 100 ticks incrementing exactly +1 every 30ms (zero skipped numbers)
@@ -34,17 +25,13 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
   }, []);
 
   useEffect(() => {
-    if (progress >= 25 && progress < 55 && statusIndex !== 1) setStatusIndex(1);
-    else if (progress >= 55 && progress < 100 && statusIndex !== 2) setStatusIndex(2);
-    else if (progress >= 100 && statusIndex !== 3) setStatusIndex(3);
-
     if (progress >= 100) {
       const timeout = setTimeout(() => {
         onComplete();
       }, 350);
       return () => clearTimeout(timeout);
     }
-  }, [progress, statusIndex, onComplete]);
+  }, [progress, onComplete]);
 
   // Calculate vertical fill for 4 leaves (0-25%, 25-50%, 50-75%, 75-100%)
   const getLeafClipY = (index: number) => {
@@ -103,15 +90,11 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           </span>
         </div>
 
-        {/* Name & Identity Monogram */}
-        <div className="space-y-1 mb-5">
+        {/* Identity */}
+        <div className="mb-5">
           <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white font-sans">
             {portfolioData.personal.name}
           </h2>
-          <div className="flex items-center justify-center gap-1.5 text-xs font-mono text-violet-400">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Full-Stack Engineer &amp; Web Developer</span>
-          </div>
         </div>
 
         {/* 4 Tea Leaves Botanical Progress Indicator */}
@@ -165,14 +148,10 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           })}
         </div>
 
-        {/* Progress Bar & Telemetry Status */}
-        <div className="w-full space-y-3">
-          <div className="flex items-center justify-between text-xs font-mono text-zinc-400">
-            <span className="flex items-center gap-1.5 text-[11px] text-zinc-500">
-              <Terminal className="w-3 h-3 text-violet-400" />
-              <span>{statuses[statusIndex]}</span>
-            </span>
-            <span className="font-semibold text-zinc-200 tabular-nums">{progress}%</span>
+        {/* Minimal Percentage & Progress Bar */}
+        <div className="w-full space-y-2.5">
+          <div className="text-center font-mono text-sm font-medium text-zinc-300 tabular-nums">
+            {progress}%
           </div>
 
           {/* Progress Track */}
