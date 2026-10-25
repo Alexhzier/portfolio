@@ -91,7 +91,7 @@ export interface PortfolioData {
 export const portfolioData: PortfolioData = {
   personal: {
     name: "Alexhzier C. Asdain",
-    role: "Full-Stack Engineer & Creative Technologist",
+    role: "Full-Stack Engineer & Website Developer",
     subRole: "AI Systems, Modern Web Applications & Hardware Prototypes",
     positioningStatement: "I build high-performance web applications, machine learning analytics platforms, and hardware-integrated software solutions.",
     bioParagraph: "Experienced in shipping production-grade web systems, deep learning NLP pipelines, and responsive interfaces with strict attention to performance, type safety, and real-world utility.",

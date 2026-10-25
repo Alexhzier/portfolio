@@ -8,7 +8,6 @@ import {
   Mail, 
   Phone, 
   CheckCircle2, 
-  Sparkles, 
   BookOpen, 
   ArrowUpRight 
 } from 'lucide-react';
@@ -130,36 +129,47 @@ export const PersonalInfoEducation: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ type: 'spring', stiffness: 180, damping: 24, delay: 0.08 }}
-              className="rounded-2xl bg-zinc-950/70 border border-white/[0.08] hover:border-violet-500/30 transition-all duration-300 p-6 sm:p-7 group"
+              className="rounded-2xl bg-zinc-950/70 border border-white/[0.08] hover:border-violet-500/30 transition-all duration-300 p-6 sm:p-7 group relative overflow-hidden"
             >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-zinc-900 border border-white/[0.08] flex items-center justify-center text-zinc-300 group-hover:border-violet-500/30 transition-colors">
-                  <User className="w-5 h-5 text-violet-400" />
+              {/* Subtle Ambient Violet Corner Glow */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-violet-600/10 rounded-full blur-2xl pointer-events-none" />
+
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5 mb-5 relative z-10">
+                {/* Profile Portrait */}
+                <div className="relative shrink-0 group/photo">
+                  <div className="w-20 h-24 sm:w-24 sm:h-28 rounded-2xl overflow-hidden border-2 border-white/10 group-hover:border-violet-500/50 transition-all duration-300 shadow-xl shadow-black/70 bg-zinc-900">
+                    <img
+                      src="/profile.png"
+                      alt="Alexhzier C. Asdain"
+                      className="w-full h-full object-cover object-top filter brightness-[1.02] contrast-[1.04] group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-zinc-950 border-2 border-emerald-500 flex items-center justify-center shadow-md">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  </div>
                 </div>
-                <div>
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-500 block font-semibold">
-                    PERSONAL PROFILE
-                  </span>
-                  <h4 className="text-lg font-bold text-white tracking-tight">
+
+                {/* Identity Information */}
+                <div className="flex-1 text-center sm:text-left">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-white/[0.06] text-[10px] font-mono uppercase tracking-wider text-violet-400 mb-1.5 font-semibold">
+                    <User className="w-3 h-3" />
+                    <span>VERIFIED PROFILE</span>
+                  </div>
+                  <h4 className="text-lg sm:text-xl font-bold text-white tracking-tight">
                     {personal.name}
                   </h4>
+                  <div className="text-xs font-mono text-zinc-300 mt-1">
+                    <span className="text-violet-400 font-medium">{personal.role}</span>
+                  </div>
+                  <div className="flex items-center justify-center sm:justify-start gap-1.5 text-[11px] font-mono text-emerald-300 mt-2.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    <span>{personal.availability.label}</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="space-y-2 mb-4 text-xs font-mono text-zinc-300">
-                <div className="flex items-center gap-2">
-                  <Sparkles className="w-3.5 h-3.5 text-violet-400 shrink-0" />
-                  <span className="text-zinc-400">Role:</span>
-                  <span className="text-white font-medium">{personal.role}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  <span className="text-zinc-400">Status:</span>
-                  <span className="text-emerald-300 font-medium">{personal.availability.label}</span>
-                </div>
-              </div>
-
-              <p className="text-xs text-zinc-400 leading-relaxed font-normal">
+              <p className="text-xs text-zinc-400 leading-relaxed font-normal pt-4 border-t border-white/[0.06] relative z-10">
                 {personal.bioParagraph}
               </p>
             </motion.div>

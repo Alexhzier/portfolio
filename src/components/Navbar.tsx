@@ -74,8 +74,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
           }}
           className="flex items-center gap-2.5 text-zinc-100 hover:text-white group focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 rounded-full"
         >
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-zinc-800 to-zinc-900 border border-white/10 flex items-center justify-center font-mono font-bold text-xs tracking-wider text-violet-400 group-hover:border-violet-500/40 transition-colors shadow-inner">
-            {portfolioData.personal.name.slice(0, 2).toUpperCase()}
+          <div className="w-8 h-8 rounded-full overflow-hidden border border-white/20 flex items-center justify-center bg-zinc-900 group-hover:border-violet-500/50 transition-colors shadow-inner shrink-0">
+            <img src="/profile.png" alt={portfolioData.personal.name} className="w-full h-full object-cover object-top" />
           </div>
           <div className="flex flex-col text-left">
             <span className="text-xs font-semibold tracking-tight leading-tight text-zinc-200 group-hover:text-white transition-colors">
