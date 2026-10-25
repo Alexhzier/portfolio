@@ -11,8 +11,7 @@ import {
   MessageSquare, 
   Phone,
   MapPin,
-  Clock,
-  Globe
+  Clock
 } from 'lucide-react';
 import { portfolioData } from '../content/portfolio-data';
 import { SocialLogo } from './Icons';
@@ -99,126 +98,141 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onNotify }) => {
       {/* Background radial glow */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-violet-600/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         {/* Left Column: Direct Engagement Details */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/80 border border-white/[0.08] text-xs font-mono text-violet-400">
-            <Mail className="w-3.5 h-3.5" />
-            <span>Direct Channel</span>
-          </div>
-
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
-            Initiate a Dialogue
-          </h2>
-
-          <p className="text-base text-zinc-300 leading-relaxed font-normal">
-            Whether you need a Full-Stack Engineer and Website Developer to build production-grade web systems, deploy intelligent interfaces, or collaborate on specialized software solutions—let’s talk.
-          </p>
-
-          {/* Location & Timezone Hub */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-[#121217] border border-white/[0.08] space-y-3">
-            <div className="flex items-center justify-between text-xs font-mono text-zinc-400">
-              <span className="flex items-center gap-1.5 uppercase font-semibold tracking-wider text-violet-400">
-                <MapPin className="w-3.5 h-3.5" />
-                LOCATION &amp; TIMEZONE
-              </span>
-              <span className="text-emerald-400 flex items-center gap-1 text-[11px]">
-                <Clock className="w-3 h-3" />
-                PHT (UTC+8)
-              </span>
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/80 border border-white/[0.08] text-xs font-mono text-violet-400 mb-4">
+              <Mail className="w-3.5 h-3.5" />
+              <span>Direct Communication Channel</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-              <div className="p-3 rounded-xl bg-zinc-950/80 border border-white/[0.06] flex items-center gap-2.5">
-                <Globe className="w-4 h-4 text-violet-400 shrink-0" />
-                <div>
-                  <span className="text-[10px] font-mono text-zinc-500 uppercase block">Base Region</span>
-                  <span className="text-xs font-semibold text-white">{personal.location}</span>
-                </div>
-              </div>
+            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight mb-3">
+              Initiate a Dialogue
+            </h2>
 
-              <div className="p-3 rounded-xl bg-zinc-950/80 border border-white/[0.06] flex items-center gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <div>
-                  <span className="text-[10px] font-mono text-zinc-500 uppercase block">Availability</span>
-                  <span className="text-xs font-semibold text-emerald-300">Open to Remote Worldwide</span>
-                </div>
-              </div>
-            </div>
+            <p className="text-sm sm:text-base text-zinc-300 leading-relaxed font-normal">
+              Whether you need a Full-Stack Engineer and Website Developer to build production-grade web systems, deploy intelligent interfaces, or collaborate on specialized software solutions—let’s talk.
+            </p>
           </div>
 
-          {/* Direct Reach Channels */}
-          <div className="p-5 rounded-2xl bg-[#121217] border border-white/[0.08] space-y-4">
-            <div className="flex items-center justify-between text-xs font-mono text-zinc-400">
-              <span className="uppercase tracking-wider font-semibold text-zinc-300">DIRECT INBOX</span>
-              <span className="text-emerald-400 flex items-center gap-1">
+          {/* Unified Communication Hub Card */}
+          <div className="rounded-2xl bg-[#121217] border border-white/[0.08] p-5 sm:p-6 space-y-5 shadow-xl">
+            {/* Location & Timezone Header */}
+            <div className="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-white/[0.06]">
+              <div className="flex items-center gap-2 text-xs font-mono text-zinc-300">
+                <MapPin className="w-4 h-4 text-violet-400 shrink-0" />
+                <span className="font-medium text-white">{personal.location}</span>
+                <span className="text-zinc-600">·</span>
+                <span className="text-violet-400 flex items-center gap-1 text-[11px]">
+                  <Clock className="w-3 h-3" />
+                  PHT (UTC+8)
+                </span>
+              </div>
+
+              <div className="inline-flex items-center gap-1.5 text-[11px] font-mono text-emerald-400">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                Response SLA: &lt; 24h
-              </span>
+                <span>Response SLA: &lt; 24h</span>
+              </div>
             </div>
 
-            <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-zinc-950/80 border border-white/[0.06]">
-              <span className="font-mono text-sm text-zinc-200 select-all truncate">
-                {personal.email}
-              </span>
-              <button
-                onClick={handleCopyEmail}
-                className="shrink-0 p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/10 transition-colors cursor-pointer"
-                aria-label="Copy email"
-              >
-                {emailCopied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-              </button>
-            </div>
-
-            <div className="flex items-center justify-between text-xs font-mono text-zinc-400 pt-1">
-              <span className="uppercase tracking-wider font-semibold text-zinc-300">DIRECT PHONE LINE (PH)</span>
-              <span className="text-violet-400 font-mono text-[11px]">Voice / SMS</span>
-            </div>
-
-            <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-zinc-950/80 border border-white/[0.06]">
-              <a
-                href={`tel:${personal.phoneRaw}`}
-                className="font-mono text-sm text-zinc-200 hover:text-violet-300 transition-colors flex items-center gap-2 truncate"
-                title="Call phone number"
-              >
-                <Phone className="w-3.5 h-3.5 text-violet-400 shrink-0" />
-                <span>{personal.phone}</span>
-              </a>
-              <button
-                onClick={handleCopyPhone}
-                className="shrink-0 p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/10 transition-colors cursor-pointer"
-                aria-label="Copy phone number"
-              >
-                {phoneCopied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-              </button>
-            </div>
-          </div>
-
-          <div className="pt-2">
-            <span className="text-xs font-mono uppercase text-zinc-500 block mb-3">Network & Field Notes</span>
-            <div className="grid grid-cols-2 gap-3">
-              {personal.socialLinks.map((link) => (
-                <a
-                  key={link.platform}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between p-3 rounded-xl bg-[#121217] border border-white/[0.08] hover:border-violet-500/40 text-xs text-zinc-300 hover:text-white transition-all group"
+            {/* Direct Channels (Email & Phone) */}
+            <div className="space-y-3">
+              {/* Email Row */}
+              <div className="p-3 rounded-xl bg-zinc-950/80 border border-white/[0.06] flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 block">
+                    DIRECT INBOX
+                  </span>
+                  <a
+                    href={`mailto:${personal.email}`}
+                    className="font-mono text-xs sm:text-sm text-zinc-200 hover:text-violet-300 transition-colors truncate block select-all"
+                  >
+                    {personal.email}
+                  </a>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  className="shrink-0 p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/10 transition-colors cursor-pointer"
+                  aria-label="Copy email address"
+                  title="Copy email"
                 >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <SocialLogo platform={link.platform} className="w-4 h-4 shrink-0 text-violet-400 group-hover:scale-110 transition-transform" />
-                    <span className="font-medium truncate">{link.platform}</span>
-                  </div>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-violet-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-1" />
-                </a>
-              ))}
+                  {emailCopied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                </button>
+              </div>
+
+              {/* Phone Row */}
+              <div className="p-3 rounded-xl bg-zinc-950/80 border border-white/[0.06] flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 block">
+                    DIRECT PHONE LINE (PH)
+                  </span>
+                  <a
+                    href={`tel:${personal.phoneRaw}`}
+                    className="font-mono text-xs sm:text-sm text-zinc-200 hover:text-violet-300 transition-colors truncate block"
+                    title="Call phone number"
+                  >
+                    {personal.phone}
+                  </a>
+                </div>
+                <div className="flex items-center gap-1 shrink-0">
+                  <a
+                    href={`tel:${personal.phoneRaw}`}
+                    className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/10 transition-colors"
+                    title="Call phone"
+                    aria-label="Call phone"
+                  >
+                    <Phone className="w-4 h-4 text-violet-400" />
+                  </a>
+                  <button
+                    type="button"
+                    onClick={handleCopyPhone}
+                    className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/10 transition-colors cursor-pointer"
+                    aria-label="Copy phone number"
+                    title="Copy phone"
+                  >
+                    {phoneCopied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Social & Professional Networks */}
+            <div className="pt-2 border-t border-white/[0.06]">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 block mb-2 font-semibold">
+                PROFESSIONAL NETWORKS
+              </span>
+              <div className="grid grid-cols-2 gap-2.5">
+                {personal.socialLinks.slice(0, 2).map((link) => (
+                  <a
+                    key={link.platform}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-950/80 border border-white/[0.06] hover:border-violet-500/40 text-xs text-zinc-300 hover:text-white transition-all group"
+                  >
+                    <div className="flex items-center gap-2 min-w-0">
+                      <SocialLogo platform={link.platform} className="w-4 h-4 shrink-0 text-violet-400 group-hover:scale-110 transition-transform" />
+                      <span className="font-medium truncate font-mono text-[11px]">{link.platform}</span>
+                    </div>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-violet-400 transition-all shrink-0" />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Availability Indicator */}
+            <div className="pt-2 flex items-center gap-2 text-xs font-mono text-emerald-300">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span>Available for full-time engineering &amp; select contracts</span>
             </div>
           </div>
         </div>
 
         {/* Right Column: Inline Contact Form */}
         <div className="lg:col-span-7">
-          <div className="rounded-3xl bg-[#121217] border border-white/[0.08] p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+          <div className="rounded-2xl bg-[#121217] border border-white/[0.08] p-6 sm:p-8 shadow-xl relative overflow-hidden">
             {submitted ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}

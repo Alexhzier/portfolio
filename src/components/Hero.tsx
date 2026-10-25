@@ -11,8 +11,9 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onCopyEmail }) => {
   const [copied, setCopied] = useState<boolean>(false);
+  const [activeCategory, setActiveCategory] = useState<string>('All');
 
-  const { personal } = portfolioData;
+  const { personal, techCategories } = portfolioData;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(personal.email);
@@ -21,15 +22,16 @@ export const Hero: React.FC<HeroProps> = ({ onCopyEmail }) => {
     setTimeout(() => setCopied(false), 2400);
   };
 
-  const coreStack = [
-    'Next.js 15',
-    'TypeScript',
-    'React 19',
-    'Tailwind CSS',
-    'Supabase & PostgreSQL',
-    'Python',
-    'Natural Language Processing (NLP)',
-  ];
+  const allSkills = techCategories.flatMap((c) =>
+    c.skills.map((s) => ({ ...s, category: c.category }))
+  );
+
+  const displayedSkills =
+    activeCategory === 'All'
+      ? allSkills
+      : allSkills.filter((s) => s.category === activeCategory);
+
+  const categories = ['All', ...techCategories.map((c) => c.category)];
 
   return (
     <section
@@ -139,27 +141,55 @@ export const Hero: React.FC<HeroProps> = ({ onCopyEmail }) => {
           </motion.button>
         </motion.div>
 
-        {/* Gentle Core Tech Stack Strip */}
+        {/* Live Interactive Architecture Stack */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ type: 'spring', stiffness: 200, damping: 25, delay: 0.3 }}
-          className="w-full max-w-3xl pt-6 border-t border-white/[0.06] flex flex-col items-center px-2"
+          transition={{ type: 'spring', stiffness: 180, damping: 24, delay: 0.3 }}
+          className="w-full max-w-3xl pt-8 border-t border-white/[0.06] flex flex-col items-center px-2"
         >
-          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-zinc-500 mb-3">
-            <Layers className="w-3.5 h-3.5 text-violet-400" />
-            <span>Primary Technology Stack</span>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 w-full mb-4">
+            <span className="text-xs font-mono uppercase tracking-wider text-zinc-500 flex items-center gap-2">
+              <Layers className="w-3.5 h-3.5 text-violet-400" />
+              Specialized Architecture Stack
+            </span>
+
+            {/* Filter Category Pills */}
+            <div className="flex items-center gap-1 bg-zinc-900/80 p-1 rounded-lg border border-white/[0.06] text-[11px] font-mono overflow-x-auto max-w-full">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-2.5 py-1 rounded-md transition-colors whitespace-nowrap cursor-pointer ${
+                    activeCategory === cat
+                      ? 'bg-violet-600/30 text-violet-200 border border-violet-500/40'
+                      : 'text-zinc-400 hover:text-zinc-200'
+                  }`}
+                >
+                  {cat === 'All' ? `All (${allSkills.length})` : cat.split(' ')[0]}
+                </button>
+              ))}
+            </div>
           </div>
 
+          {/* Interactive Badges Cloud with official SVG logos */}
           <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5 max-w-full">
-            {coreStack.map((tech) => (
-              <div
-                key={tech}
-                className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-zinc-900/70 border border-white/[0.06] text-xs font-mono text-zinc-300 shadow-sm"
+            {displayedSkills.map((skill) => (
+              <motion.div
+                key={skill.name}
+                layout
+                whileHover={{ scale: 1.04, y: -2 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                className="group relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#121217] hover:bg-[#181820] border border-white/[0.08] hover:border-violet-500/40 text-xs text-zinc-300 hover:text-white transition-colors shadow-sm cursor-default"
               >
-                <TechLogo name={tech} className="w-3.5 h-3.5 shrink-0" />
-                <span>{tech}</span>
-              </div>
+                <TechLogo name={skill.name} className="w-3.5 h-3.5 shrink-0" />
+                <span className="font-medium">{skill.name}</span>
+                {skill.badge && (
+                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/[0.04] text-zinc-400 group-hover:text-violet-300 group-hover:bg-violet-500/10 border border-transparent group-hover:border-violet-500/20 transition-colors">
+                    {skill.badge}
+                  </span>
+                )}
+              </motion.div>
             ))}
           </div>
         </motion.div>
