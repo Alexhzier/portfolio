@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { BentoGrid } from './components/BentoGrid';
-import { MetricsCounter } from './components/MetricsCounter';
+import { PersonalInfoEducation } from './components/PersonalInfoEducation';
 import { Timeline } from './components/Timeline';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
@@ -42,8 +42,8 @@ export function App() {
         {/* Bento Grid Showcase */}
         <BentoGrid />
 
-        {/* Metrics & Quantitative Proof */}
-        <MetricsCounter />
+        {/* Personal Information & Education */}
+        <PersonalInfoEducation />
 
         {/* Chronological Experience Timeline */}
         <Timeline />

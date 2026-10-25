@@ -63,7 +63,7 @@ export const Hero: React.FC<HeroProps> = ({ onCopyEmail }) => {
           <span className="text-zinc-600 font-mono">/</span>
           <span className="text-[10px] sm:text-[11px] font-mono text-violet-400 shrink-0">
             <span className="hidden sm:inline">{personal.location}</span>
-            <span className="sm:hidden">SF &amp; Remote</span>
+            <span className="sm:hidden">PH &amp; Remote</span>
           </span>
         </motion.div>
 

@@ -46,6 +46,15 @@ export interface MetricProof {
   detail: string;
 }
 
+export interface EducationInfo {
+  degree: string;
+  field: string;
+  graduationStatus: string;
+  graduationYear: string;
+  summary: string;
+  highlights: string[];
+}
+
 export interface PortfolioData {
   personal: {
     name: string;
@@ -53,6 +62,7 @@ export interface PortfolioData {
     subRole: string;
     positioningStatement: string;
     bioParagraph: string;
+    education: EducationInfo;
     availability: {
       status: boolean;
       label: string;
@@ -80,11 +90,23 @@ export interface PortfolioData {
 
 export const portfolioData: PortfolioData = {
   personal: {
-    name: "Alexhzier Asdain",
+    name: "Alexhzier C. Asdain",
     role: "Full-Stack Engineer & Creative Technologist",
     subRole: "AI Systems, Modern Web Applications & Hardware Prototypes",
     positioningStatement: "I build high-performance web applications, machine learning analytics platforms, and hardware-integrated software solutions.",
     bioParagraph: "Experienced in shipping production-grade web systems, deep learning NLP pipelines, and responsive interfaces with strict attention to performance, type safety, and real-world utility.",
+    education: {
+      degree: "Bachelor of Science in Computer Science",
+      field: "Computer Science",
+      graduationStatus: "Graduated 2026",
+      graduationYear: "2026",
+      summary: "Comprehensive academic foundation in software engineering, algorithms, database systems, and applied machine learning.",
+      highlights: [
+        "Undergraduate Thesis: Social Media Listening for Mental Health Issues in SOCCSARGEN using NLP & CNN-LSTM classification model on 5,067 manually collected posts.",
+        "Industry Internship: Software Development Intern at T3X Solutions contributing to Delphi full-stack applications and Highcharts reporting interfaces.",
+        "Core Competencies: Object-Oriented Programming, Data Structures, Modern Web Architectures, Database Design & Biometric Hardware Integration."
+      ]
+    },
     availability: {
       status: true,
       label: "Available for engineering roles & select contracts",

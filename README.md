@@ -1,8 +1,10 @@
-# Alexhzier Asdain — Engineering & Creative Technology Portfolio
+# Alexhzier C. Asdain — Engineering & Creative Technology Portfolio
 
-Live Website: [https://alexhzier-portfolio.com](https://alexhzier-portfolio.com) (Production) | [Vercel Preview](https://nimble-saffron-hlhutbo.tmp.now)
+Live Website: [https://alexhzierasdain-portfolio.com](https://alexhzierasdain-portfolio.com) (Production) | [Vercel Preview](https://nimble-saffron-hlhutbo.tmp.now)
 
 A dark-mode, editorial portfolio designed with elevated typography, real-time 3D ambient physics, and strict accessibility standards.
+
+**Degree**: Bachelor of Science in Computer Science (Graduated 2026)
 
 ---
 
