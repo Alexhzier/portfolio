@@ -137,15 +137,15 @@ export const PersonalInfoEducation: React.FC = () => {
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5 mb-6 relative z-10">
                 {/* Profile Portrait */}
                 <div className="relative shrink-0 group/photo">
-                  <div className="w-20 h-24 sm:w-24 sm:h-28 rounded-2xl overflow-hidden border-2 border-white/10 group-hover:border-violet-500/50 transition-all duration-300 shadow-xl shadow-black/70 bg-zinc-900">
+                  <div className="w-28 h-32 sm:w-36 sm:h-40 rounded-2xl overflow-hidden border-2 border-white/10 group-hover:border-violet-500/50 transition-all duration-300 shadow-2xl shadow-black/80 bg-zinc-900">
                     <img
                       src="/profile.png"
                       alt="Alexhzier C. Asdain"
-                      className="w-full h-full object-cover object-top filter brightness-[1.02] contrast-[1.04] group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover object-center filter brightness-[1.03] contrast-[1.03] group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
                   </div>
-                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-zinc-950 border-2 border-emerald-500 flex items-center justify-center shadow-md">
+                  <div className="absolute -bottom-1.5 -right-1.5 w-5 h-5 rounded-full bg-zinc-950 border-2 border-emerald-500 flex items-center justify-center shadow-md">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                   </div>
                 </div>
