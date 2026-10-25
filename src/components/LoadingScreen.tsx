@@ -46,6 +46,18 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
     }
   }, [progress, statusIndex, onComplete]);
 
+  // Calculate vertical fill for 4 leaves (0-25%, 25-50%, 50-75%, 75-100%)
+  const getLeafClipY = (index: number) => {
+    const start = index * 25;
+    const p = Math.max(0, Math.min(100, (progress - start) * 4));
+    const h = (p / 100) * 32;
+    return {
+      y: 32 - h,
+      height: h,
+      pct: p,
+    };
+  };
+
   return (
     <motion.div
       initial={{ opacity: 1 }}
@@ -59,9 +71,19 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
       {/* Background ambient radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-violet-600/15 rounded-full blur-[120px] pointer-events-none" />
 
+      {/* SVG Gradient Definition */}
+      <svg className="absolute w-0 h-0" aria-hidden="true">
+        <defs>
+          <linearGradient id="leafGrad" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0%" stopColor="#059669" />
+            <stop offset="100%" stopColor="#34d399" />
+          </linearGradient>
+        </defs>
+      </svg>
+
       <div className="relative z-10 flex flex-col items-center max-w-sm w-full text-center">
         {/* Avatar with Animated Pulsing Ring */}
-        <div className="relative mb-6">
+        <div className="relative mb-5">
           <motion.div
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
@@ -82,7 +104,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         </div>
 
         {/* Name & Identity Monogram */}
-        <div className="space-y-1 mb-8">
+        <div className="space-y-1 mb-5">
           <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white font-sans">
             {portfolioData.personal.name}
           </h2>
@@ -92,6 +114,57 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           </div>
         </div>
 
+        {/* 4 Tea Leaves Botanical Progress Indicator */}
+        <div className="flex items-center justify-center gap-4 mb-4">
+          {[0, 1, 2, 3].map((idx) => {
+            const leaf = getLeafClipY(idx);
+            const clipId = `loading-leaf-clip-${idx}`;
+            return (
+              <div key={idx} className="relative flex flex-col items-center">
+                <svg
+                  viewBox="0 0 32 32"
+                  className="w-8 h-8 transition-transform duration-200 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
+                  aria-hidden="true"
+                >
+                  <defs>
+                    <clipPath id={clipId}>
+                      <rect x="0" y={leaf.y} width="32" height={leaf.height} />
+                    </clipPath>
+                  </defs>
+                  {/* Outline / empty state */}
+                  <path
+                    d="M16 2 C24 7, 28 16, 26 26 C20 28, 10 25, 6 16 C6 8, 12 3, 16 2 Z"
+                    fill="rgba(255, 255, 255, 0.05)"
+                    stroke="rgba(255, 255, 255, 0.2)"
+                    strokeWidth="1.2"
+                  />
+                  <path
+                    d="M16 2 C16 11, 17 20, 26 26 M16 10 C19 12, 22 13, 24 14 M16 16 C19 18, 21 19, 23 20 M16 14 C13 16, 10 17, 8 18"
+                    fill="none"
+                    stroke="rgba(255, 255, 255, 0.15)"
+                    strokeWidth="0.8"
+                  />
+                  {/* Progressive Fill on Clip */}
+                  <g clipPath={`url(#${clipId})`}>
+                    <path
+                      d="M16 2 C24 7, 28 16, 26 26 C20 28, 10 25, 6 16 C6 8, 12 3, 16 2 Z"
+                      fill="url(#leafGrad)"
+                      stroke="#34d399"
+                      strokeWidth="1.2"
+                    />
+                    <path
+                      d="M16 2 C16 11, 17 20, 26 26 M16 10 C19 12, 22 13, 24 14 M16 16 C19 18, 21 19, 23 20 M16 14 C13 16, 10 17, 8 18"
+                      fill="none"
+                      stroke="#ecfdf5"
+                      strokeWidth="1"
+                    />
+                  </g>
+                </svg>
+              </div>
+            );
+          })}
+        </div>
+
         {/* Progress Bar & Telemetry Status */}
         <div className="w-full space-y-3">
           <div className="flex items-center justify-between text-xs font-mono text-zinc-400">
@@ -99,7 +172,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
               <Terminal className="w-3 h-3 text-violet-400" />
               <span>{statuses[statusIndex]}</span>
             </span>
-            <span className="font-semibold text-zinc-200">{progress}%</span>
+            <span className="font-semibold text-zinc-200 tabular-nums">{progress}%</span>
           </div>
 
           {/* Progress Track */}
@@ -107,7 +180,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
             <motion.div
               className="h-full bg-gradient-to-r from-violet-600 via-purple-500 to-emerald-400 rounded-full"
               style={{ width: `${progress}%` }}
-              transition={{ ease: 'easeOut', duration: 0.1 }}
+              transition={{ ease: 'easeOut', duration: 0.05 }}
             />
           </div>
         </div>
