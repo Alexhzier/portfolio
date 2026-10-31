@@ -284,6 +284,7 @@ export const portfolioData: PortfolioData = {
       featured: false,
       colSpan: "wide",
       accentGlow: "from-violet-500/20 via-blue-500/10 to-transparent",
+      imageUrl: "/projects/fingerprint-prototype.jpg",
       isPrototype: true,
       details: {
         problem: "Interfacing specialized desktop optical fingerprint sensors with web-based tracking interfaces requires managing driver communication, reader state events, and raw sample acquisition without blocking client workflows.",
